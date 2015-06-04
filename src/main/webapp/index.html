@@ -1,1 +1,76 @@
-Hello world
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chris and Ayumi's Fun Chat</title>
+</head>
+<body>
+  <div class="chat-msg-form">
+    <h4> Your message</h4>
+    <div class="user-field">
+      <label for="user-id">User ID</label>
+      <input id="user-id">
+    </div>
+    <div class="chat-field">
+      <label for="chat-msg">Message</label>
+      <input id="chat-msg">
+      <input type="submit" value="Chat"></input>
+    </div>
+  </div>
+  <div class="msg-field">
+    <h4>The chat room</h4>
+    <div id="msg-list">
+    </div>
+  </div>
+
+  <script>
+    // App State
+    var timestamp = null;
+    var conf = {
+      indexMessages: ['/API/Message', 'get'],
+      createMessage: ['/API/Message', 'post']
+    };
+
+    // Helpers
+    var httpReq = function(url, httpMethod) {
+      if (!httpMethod) { httpMethod = 'get'; }
+      return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(httpMethod, url, true);
+        xhr.responseType = 'json';
+        xhr.onload = function() {
+          var status = xhr.status;
+          if (status == 200) {
+            resolve(xhr.response);
+          } else {
+            reject(status);
+          }
+        };
+        xhr.send();
+      });
+    };
+
+
+    // App fns
+
+    // timestamp helps the server give us only what we need.
+    var getMessages = function(timestamp) {
+      console.log('getMessages');
+      httpReq.apply( this, conf.indexMessages ).then( function gotMsgs(data) {
+        console.log('getMessage - got msgs!');
+        console.log(data.result);
+      });
+    };
+
+    // Test
+    getMessages();
+
+    // httpReq('https://www.googleapis.com/freebase/v1/text/en/bob_dylan').then(function(data) {
+    //   alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
+    //
+    //   result.innerText = data.result; //display the result in an HTML element
+    // }, function(status) { //error detection....
+    // alert('Something went wrong.');
+    // });
+  </script>
+</body>
+</html>
