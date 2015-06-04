@@ -2,6 +2,7 @@ package com.erigir.chatty.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by chrweiss on 6/4/15.
@@ -16,6 +17,12 @@ public class MessageResponse {
 
     public void setMsgs(List<Message> msgs) {
         this.msgs = msgs;
+    }
+
+    public void addMessage(Message msg)
+    {
+        Objects.requireNonNull(msg);
+        msgs.add(msg);
     }
 
     public Long getTimestamp() {
