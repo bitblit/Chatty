@@ -26,16 +26,16 @@
     // App State
     var timestamp = null;
     var conf = {
-      indexMessages: ['/API/Message', 'get'],
-      createMessage: ['/API/Message', 'post']
+      pollInterval: 2500,
+      indexMessages: '/API/Message',
+      createMessage: '/API/Message'
     };
 
     // Helpers
-    var httpReq = function(url, httpMethod) {
-      if (!httpMethod) { httpMethod = 'get'; }
+    var get = function(url) {
       return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
-        xhr.open(httpMethod, url, true);
+        xhr.open('get', url, true);
         xhr.responseType = 'json';
         xhr.onload = function() {
           var status = xhr.status;
@@ -49,28 +49,75 @@
       });
     };
 
+    var post = function(url, data) {
+      var dataStr = JSON.stringify(data);
+      return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('post', url, true);
+        xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+        xhr.setRequestHeader("Content-length", dataStr.length);
+        xhr.setRequestHeader("Connection", "close");
+        xhr.responseType = 'json';
+        xhr.onload = function() {
+          var status = xhr.status;
+          if (status == 200) {
+            resolve(xhr.response);
+          } else {
+            reject(status);
+          }
+        };
+        xhr.send(dataStr);
+      });
+    };
+
+
+
 
     // App fns
 
     // timestamp helps the server give us only what we need.
     var getMessages = function(timestamp) {
       console.log('getMessages');
-      httpReq.apply( this, conf.indexMessages ).then( function gotMsgs(data) {
+      var url;
+      if (timestamp) {
+        url = conf.indexMessages + "?timestamp=" + timestamp;
+      } else {
+        url = conf.indexMessages;
+      }
+      return get(url);
+    };
+
+
+    var createMessage = function(userId, msg) {
+      return post(conf.createMessage, { userid: userId, msg: msg });
+    };
+
+    // Linked to app state, timestamp
+    var getAndRenderMessages = function() {
+      getMessages(timestamp).then( function gotMsgs(data) {
         console.log('getMessage - got msgs!');
-        console.log(data.result);
+        console.log(data);
       });
     };
 
-    // Test
-    getMessages();
+    // App
+    // --
+    // Poller
+    window.setInterval(getAndRenderMessages, conf.pollInterval);
 
-    // httpReq('https://www.googleapis.com/freebase/v1/text/en/bob_dylan').then(function(data) {
-    //   alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
-    //
-    //   result.innerText = data.result; //display the result in an HTML element
-    // }, function(status) { //error detection....
-    // alert('Something went wrong.');
-    // });
+    // Chatter
+    var userIdBox = document.getElementById('user-id');
+    var chatBox = document.getElementById('chat-msg');
+    chatBox.addEventListener("keydown", function chatBoxKeydown(ev){
+      if (ev.keyCode === 13) {
+        console.log("Pressed enter on the chat box");
+        var userId = userIdBox.value;
+        var msg = chatBox.value;
+        createMessage(userId, msg).then( function msgCreated(data) {
+          console.log('msgCreated!');
+        });
+      }
+    });
   </script>
 </body>
 </html>
