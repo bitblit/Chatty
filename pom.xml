@@ -117,11 +117,6 @@
         </dependency>
         <dependency>
             <groupId>com.erigir</groupId>
-            <artifactId>wrench-zk</artifactId>
-            <version>${wrench.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.erigir</groupId>
             <artifactId>wrench-web</artifactId>
             <version>${wrench.version}</version>
         </dependency>
