@@ -51,6 +51,8 @@ public class ChatCtrl {
     public
     void newMessage(@RequestBody Message newMessage, HttpServletResponse resp)
     throws IOException {
+
+        LOG.debug("Request : {}",newMessage);
         if (newMessage==null || StringUtils.isEmpty(newMessage.getMessage()) || StringUtils.isEmpty(newMessage.getUserid()))
         {
             resp.getWriter().println("The message and user-id must be set");
