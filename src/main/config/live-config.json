@@ -1,0 +1,77 @@
+[
+    {
+        "Namespace": "aws:autoscaling:asg",
+        "OptionName": "MinSize",
+        "Value": "1"
+    },
+    {
+        "Namespace": "aws:autoscaling:asg",
+        "OptionName": "MaxSize",
+        "Value": "4"
+    },
+    {
+        "Namespace": "aws:autoscaling:launchconfiguration",
+        "OptionName": "InstanceType",
+        "Value": "m1.small"
+    },
+    {
+        "Namespace": "aws:autoscaling:launchconfiguration",
+        "OptionName": "EC2KeyName",
+        "Value": "chairman-keys"
+    },
+    {
+        "Namespace": "aws:autoscaling:launchconfiguration",
+        "OptionName": "IamInstanceProfile",
+        "Value": "chairman-prod"
+    },
+    {
+        "Namespace": "aws:autoscaling:launchconfiguration",
+        "OptionName": "MonitoringInterval",
+        "Value": "5 minutes"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:sns:topics",
+        "OptionName": "Notification Topic ARN",
+        "Value": "arn:aws:sns:us-east-1:607261397013:chairman-system-event-topic"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:hostmanager",
+        "OptionName": "LogPublicationControl",
+        "Value": "true"
+    },
+    {
+        "Namespace": "aws:elb:loadbalancer",
+        "OptionName": "CrossZone",
+        "Value": "true"
+    },
+    {
+        "Namespace": "aws:elb:policies",
+        "OptionName": "ConnectionDrainingEnabled",
+        "Value": "true"
+    },
+    {
+        "Namespace": "aws:elb:policies",
+        "OptionName": "Stickiness Policy",
+        "Value": "true"
+    },
+    {
+        "Namespace": "aws:elb:policies",
+        "OptionName": "Stickiness Cookie Expiration",
+        "Value": "14400"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:application:environment",
+        "OptionName": "spring.profiles.active",
+        "Value": "production"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:application:environment",
+        "OptionName": "javamelody.authorized-users",
+        "Value": "root:melody@1"
+    },
+    {
+        "Namespace" : "aws:elb:loadbalancer",
+        "OptionName": "SSLCertificateId",
+        "Value": "arn:aws:iam::607261397013:server-certificate/cloudfront/zappos-biz-2014-10-19/zappos-biz-2014-10-19"
+    }
+]

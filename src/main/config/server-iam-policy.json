@@ -1,0 +1,55 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "1",
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::chairman-content/*"
+            ]
+        },
+        {
+            "Sid": "1a",
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::chairman-content"
+            ]
+        },
+        {
+            "Sid": "2",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::pt-arch-common-config/chairman/*"
+            ]
+        },
+        {
+            "Sid": "3",
+            "Effect": "Allow",
+            "Action": [
+                "ses:SendEmail"
+            ],
+            "Resource": [
+                "arn:aws:ses:us-east-1:607261397013:identity/zappos.biz"
+            ]
+        },
+        {
+            "Sid": "4",
+            "Effect": "Allow",
+            "Action": [
+                "SNS:Publish"
+            ],
+            "Resource": [
+                "arn:aws:sns:us-east-1:607261397013:chairman-system-event-topic"
+            ]
+        }
+    ]
+}
