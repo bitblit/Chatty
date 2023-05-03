@@ -152,7 +152,7 @@
         <aws.version>1.12.398</aws.version>
         <aws.lambda.version>1.2.1</aws.lambda.version>
         <wrench.version>2.2.16+16</wrench.version>
-        <spring.version>6.0.7</spring.version>
+        <spring.version>6.0.8</spring.version>
 
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
